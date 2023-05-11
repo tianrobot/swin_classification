@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
     # Pretrain weight path, set to null character if you do not to load the Pretrain weight
     parser.add_argument('--weights', type=str, 
-                        default='../pretrained_model',
+                        default='../pretrained_model/swin_base_patch4_window12_384_in22k.pth',
                         help='initial weights path')
     
     # Whether to freeze the weights
