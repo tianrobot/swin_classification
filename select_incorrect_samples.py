@@ -70,7 +70,7 @@ def main(args, data=''):
     model.load_state_dict(torch.load(args.weights, map_location=device))
 
     # read class_indict
-    json_path = '/Users/tian/Downloads/thesis/Thesis/swin_transformer/class_indices.json'
+    json_path = './class_indices.json'
     assert os.path.exists(json_path), "file: '{}' dose not exist.".format(json_path)
 
     json_file = open(json_path, "r")
@@ -122,10 +122,10 @@ if __name__ == '__main__':
 
     # The root directory where the dataset is located
     parser.add_argument('--data-path', type=str,
-                        default="/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Testing")
+                        default="../dataset/Testing")
 
     # Training weight path
-    parser.add_argument('--weights', type=str, default='/Users/tian/Downloads/thesis/Thesis/swin_transformer/weights/model-6.pth',
+    parser.add_argument('--weights', type=str, default='../weights/model-6.pth',
                         help='initial weights path')
     # Whether to freeze weights
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
