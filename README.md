@@ -14,3 +14,4 @@ weights, you can download the corresponding pre-training weights according to th
 6. In `predict.py` script to import the same model as `train.py` script and set `model_weight_path` to the trained model weigth path (Saved in the weights folder by default).
 7. In `predict.py` script to set `img_path` to the absolute paht of the image you need to pridect and set `json_path` to the absolute path of `class_indices.json` file.
 8. If you want to use your own dataset, please follow the file structure of the default classification dataset (i.e. one category for one folder) and set the `num_classes` in `train.py` and `predict.py` scripts to the number of categories in your own dataset.
+9. Pretrained model: swin_base_patch4_window12_384_22k.pth.
