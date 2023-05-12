@@ -93,7 +93,8 @@ def main(args):
         val_loss, val_acc = evaluate(model=model,
                                      data_loader=val_loader,
                                      device=device,
-                                     epoch=epoch)
+                                     epoch=epoch,
+                                     str='val_loader')
 
         tags = ["train_loss", "train_acc", "val_loss", "val_acc", "learning_rate"]
         tb_writer.add_scalar(tags[0], train_loss, epoch)
@@ -108,17 +109,17 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=4)
-    parser.add_argument('--epochs', type=int, default=7)
+    parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--lr', type=float, default=0.0001)
 
     # Root directory of the train dataset
     parser.add_argument('--data-path', type=str,
-                        default="../dataset/Training")
+                        default="/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training")
 
     # Pretrain weight path, set to null character if you do not to load the Pretrain weight
     parser.add_argument('--weights', type=str, 
-                        default='../pretrained_model/swin_base_patch4_window12_384_in22k.pth',
+                        default='/Users/tian/Downloads/thesis/Thesis/swin_transformer/pretrained_model/swin_base_patch4_window12_384_22k.pth',
                         help='initial weights path')
     
     # Whether to freeze the weights
