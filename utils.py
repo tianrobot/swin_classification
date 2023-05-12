@@ -10,6 +10,7 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 
+# read training dataset
 def read_split_data(root: str, val_rate: float = 0.2):
     random.seed(0)  # Ensure random results are reproducible
     assert os.path.exists(root), "dataset root: {} does not exist.".format(root)
@@ -24,10 +25,10 @@ def read_split_data(root: str, val_rate: float = 0.2):
     with open('class_indices.json', 'w') as json_file:
         json_file.write(json_str)
 
-    train_images_path = []  # Store all image paths of the training set
-    train_images_label = []  # Store the index information corresponding to the training set images
-    val_images_path = []  # Store all image paths of the validation set
-    val_images_label = []  # Store the index information corresponding to the validation set images
+    train_images_path = []  # Store all image paths of the training dataset
+    train_images_label = []  # Store the label corresponding to the training images
+    val_images_path = []  # Store all image paths of the validation dataset
+    val_images_label = []  # Store the label corresponding to the validation images
     every_class_num = []  # Store the total number of samples for each category
     supported = [".jpg", ".JPG", ".png", ".PNG"]  # Supported file suffix types
     # Iterate through the files in each folder
@@ -79,11 +80,77 @@ def read_split_data(root: str, val_rate: float = 0.2):
     return train_images_path, train_images_label, val_images_path, val_images_label
 
 
+# read test dataset
+def read_test_data(root: str):
+    random.seed(0)  # Ensure random results are reproducible
+    assert os.path.exists(root), "dataset root: {} does not exist.".format(root)
+
+    # Iterate through folders, one folder corresponds to one category
+    imgs_class = [cla for cla in os.listdir(root) if os.path.isdir(os.path.join(root, cla))]
+    # Sorting to ensure consistent order across platforms
+    imgs_class.sort()
+    # Generate category names and corresponding numeric indexes
+    class_indices = dict((k, v) for v, k in enumerate(imgs_class))
+    json_str = json.dumps(dict((val, key) for key, val in class_indices.items()), indent=4)
+    with open('class_indices.json', 'w') as json_file:
+        json_file.write(json_str)
+
+    test_images_path = []  # Store all image paths of the test dataset
+    test_images_label = []  # Store the label corresponding to the test dataset
+    # val_images_path = []  # Store all image paths of the validation set
+    # val_images_label = []  # Store the index information corresponding to the validation set images
+    every_class_num = []  # Store the total number of samples for each category
+    supported = [".jpg", ".JPG", ".png", ".PNG"]  # Supported file suffix types
+    # Iterate through the files in each folder
+    for cla in imgs_class:
+        cla_path = os.path.join(root, cla)
+        # Iterate through to get all the file paths of supported
+        images = [os.path.join(root, cla, i) for i in os.listdir(cla_path)
+                  if os.path.splitext(i)[-1] in supported]
+        # Sorting to ensure consistent order across platforms
+        images.sort()
+        # Get the index corresponding to the category
+        image_class = class_indices[cla]
+        # Record the number of samples in the category
+        every_class_num.append(len(images))
+        
+        for img_path in images:
+                # stored in the test dataset
+                test_images_path.append(img_path)
+                test_images_label.append(image_class)
+
+    print("{} images were found in the dataset for testing.".format(sum(every_class_num)))
+    assert len(test_images_path) > 0, 'number of test images must greater than 0.'
+    # print("{} images for training.".format(len(train_images_path)))
+    # print("{} images for validation.".format(len(val_images_path)))
+    # assert len(train_images_path) > 0, "number of training images must greater than 0."
+    # assert len(val_images_path) > 0, "number of validation images must greater than 0."
+
+    plot_image = False
+    if plot_image:
+        # Plot a histogram of the number of each category
+        plt.bar(range(len(imgs_class)), every_class_num, align='center')
+        # Replace the horizontal coordinates 0,1,2,3,4 with the corresponding category names
+        plt.xticks(range(len(imgs_class)), imgs_class)
+        # Adding numeric labels to the bar chart
+        for i, v in enumerate(every_class_num):
+            plt.text(x=i, y=v + 5, s=str(v), ha='center')
+        # Set x coordinate
+        plt.xlabel('images class')
+        # Set y coordinate
+        plt.ylabel('number of images')
+        # Set the title of the bar chart
+        plt.title('images class distribution')
+        plt.show()
+
+    return test_images_path, test_images_label
+
+
 def plot_data_loader_image(data_loader):
     batch_size = data_loader.batch_size
     plot_num = min(batch_size, 4)
 
-    json_path = '../class_indices.json'
+    json_path = '/Users/tian/Downloads/thesis/Thesis/swin_transformer/class_indices.json'
     assert os.path.exists(json_path), json_path + " does not exist."
     json_file = open(json_path, 'r')
     class_indices = json.load(json_file)
@@ -151,7 +218,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch):
 
 
 @torch.no_grad()
-def evaluate(model, data_loader, device, epoch):
+def evaluate(model, data_loader, device, epoch, str=''):
     loss_function = torch.nn.CrossEntropyLoss()
 
     model.eval()
@@ -172,7 +239,12 @@ def evaluate(model, data_loader, device, epoch):
         loss = loss_function(pred, labels.to(device))
         accu_loss += loss
 
-        data_loader.desc = "[valid epoch {}] loss: {:.3f}, acc: {:.3f}".format(epoch,
+        if str == 'val_loader':
+            data_loader.desc = "[valid epoch {}] loss: {:.3f}, acc: {:.3f}".format(epoch,
+                                                                               accu_loss.item() / (step + 1),
+                                                                               accu_num.item() / sample_num)
+        elif str == 'test_loader':
+            data_loader.desc = "[test epoch {}] loss: {:.3f}, acc: {:.3f}".format(epoch,
                                                                                accu_loss.item() / (step + 1),
                                                                                accu_num.item() / sample_num)
 
