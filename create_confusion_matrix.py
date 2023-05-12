@@ -169,10 +169,10 @@ if __name__ == '__main__':
 
     # The dataset absolute path
     parser.add_argument('--data-path', type=str,
-                        default="/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Testing")
+                        default="../dataset/Testing")
 
     # Training weight absolute path
-    parser.add_argument('--weights', type=str, default='/Users/tian/Downloads/thesis/Thesis/swin_transformer/weights/model-6.pth',
+    parser.add_argument('--weights', type=str, default='../weights/model-6.pth',
                         help='initial weights path')
     
     # Whether to freeze weights
