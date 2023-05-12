@@ -1,0 +1,24 @@
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (157).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (428).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (441).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (467).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (5).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (547).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (553).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (554).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (608).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/glioma_tumor/gg (704).jpg  TrueLabel:glioma_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image (42).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image (48).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(106).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(12).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(133).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(278).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(43).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(57).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/no_tumor/image(67).jpg  TrueLabel:no_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (131).jpg  TrueLabel:pituitary_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (133).jpg  TrueLabel:pituitary_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (135).jpg  TrueLabel:pituitary_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (661).jpg  TrueLabel:pituitary_tumor  PredictLabel:meningioma_tumor
+/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (726).jpg  TrueLabel:pituitary_tumor  PredictLabel:glioma_tumor
