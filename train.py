@@ -115,11 +115,11 @@ if __name__ == '__main__':
 
     # Root directory of the train dataset
     parser.add_argument('--data-path', type=str,
-                        default="/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training")
+                        default="../dataset/Training")
 
     # Pretrain weight path, set to null character if you do not to load the Pretrain weight
     parser.add_argument('--weights', type=str, 
-                        default='/Users/tian/Downloads/thesis/Thesis/swin_transformer/pretrained_model/swin_base_patch4_window12_384_22k.pth',
+                        default='../pretrained_model/swin_base_patch4_window12_384_22k.pth',
                         help='initial weights path')
     
     # Whether to freeze the weights
