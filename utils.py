@@ -97,8 +97,6 @@ def read_test_data(root: str):
 
     test_images_path = []  # Store all image paths of the test dataset
     test_images_label = []  # Store the label corresponding to the test dataset
-    # val_images_path = []  # Store all image paths of the validation set
-    # val_images_label = []  # Store the index information corresponding to the validation set images
     every_class_num = []  # Store the total number of samples for each category
     supported = [".jpg", ".JPG", ".png", ".PNG"]  # Supported file suffix types
     # Iterate through the files in each folder
@@ -121,10 +119,6 @@ def read_test_data(root: str):
 
     print("{} images were found in the dataset for testing.".format(sum(every_class_num)))
     assert len(test_images_path) > 0, 'number of test images must greater than 0.'
-    # print("{} images for training.".format(len(train_images_path)))
-    # print("{} images for validation.".format(len(val_images_path)))
-    # assert len(train_images_path) > 0, "number of training images must greater than 0."
-    # assert len(val_images_path) > 0, "number of validation images must greater than 0."
 
     plot_image = False
     if plot_image:
@@ -150,7 +144,7 @@ def plot_data_loader_image(data_loader):
     batch_size = data_loader.batch_size
     plot_num = min(batch_size, 4)
 
-    json_path = '/Users/tian/Downloads/thesis/Thesis/swin_transformer/class_indices.json'
+    json_path = './class_indices.json'
     assert os.path.exists(json_path), json_path + " does not exist."
     json_file = open(json_path, 'r')
     class_indices = json.load(json_file)
