@@ -19,7 +19,7 @@ def main():
                                          transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
     # load image
-    img_path = "/Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Testing/meningioma_tumor/image(15).jpg"
+    img_path = ".../dataset/Testing/meningioma_tumor/image(15).jpg"
     assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
     img = Image.open(img_path)
     # Convert MRIs into RGB image
@@ -32,7 +32,7 @@ def main():
     # img = torch.reshape(img,(44, 1024))
 
     # read class_indict
-    json_path = '/Users/tian/Downloads/thesis/Thesis/swin_transformer/class_indices.json'
+    json_path = './class_indices.json'
     assert os.path.exists(json_path), "file: '{}' dose not exist.".format(json_path)
 
     with open(json_path, "r") as f:
@@ -41,7 +41,7 @@ def main():
     # create model
     model = create_model(num_classes=4).to(device)
     # load model weights
-    model_weight_path = "/Users/tian/Downloads/thesis/Thesis/swin_transformer/weights/model-6.pth"
+    model_weight_path = "../weights/model-6.pth"
     model.load_state_dict(torch.load(model_weight_path, map_location=device))
     model.eval()
     with torch.no_grad():
