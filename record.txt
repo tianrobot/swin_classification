@@ -22,3 +22,4 @@
 /Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (135).jpg  TrueLabel:pituitary_tumor  PredictLabel:meningioma_tumor
 /Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (661).jpg  TrueLabel:pituitary_tumor  PredictLabel:meningioma_tumor
 /Users/tian/Downloads/thesis/Thesis/swin_transformer/dataset/Training/pituitary_tumor/p (726).jpg  TrueLabel:pituitary_tumor  PredictLabel:glioma_tumor
+11
