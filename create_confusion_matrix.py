@@ -135,7 +135,7 @@ def main(args, str=''):
     model.to(device)
 
     # read class_indict
-    json_label_path = './class_indices.json'
+    json_label_path = '/class_indices.json'
     assert os.path.exists(json_label_path), "cannot find {} file".format(json_label_path)
     json_file = open(json_label_path, 'r')
     class_indict = json.load(json_file)
@@ -169,10 +169,10 @@ if __name__ == '__main__':
 
     # The dataset absolute path
     parser.add_argument('--data-path', type=str,
-                        default="../dataset/Testing")
+                        default="/dataset/Testing")
 
     # Training weight absolute path
-    parser.add_argument('--weights', type=str, default='../weights/model-6.pth',
+    parser.add_argument('--weights', type=str, default='/weights/model-6.pth',
                         help='initial weights path')
     
     # Whether to freeze weights
