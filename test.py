@@ -7,7 +7,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
 from my_dataset import MyDataSet
-from model import swin_base_patch4_window12_384_in22k as create_model
+from model_v2 import swinv2_tiny_patch4_window8_256 as create_model
 from utils import read_test_data, evaluate
 
 
@@ -21,7 +21,7 @@ def main(args):
 
     test_images_path, test_images_label = read_test_data(args.data_path)
 
-    img_size = 384
+    img_size = args.img_size
     data_transform = transforms.Compose([transforms.Resize(int(img_size * 1.14)),
                                          transforms.CenterCrop(img_size),
                                          transforms.ToTensor(),
@@ -44,9 +44,9 @@ def main(args):
                                               collate_fn=test_dataset.collate_fn)
     
     # create model
-    model = create_model(num_classes=args.num_classes).to(device)
+    model = create_model(num_classes=args.num_classes, img_size=args.img_size).to(device)
     # load model weights
-    model_weight_path = '/weights/model-6.pth'
+    model_weight_path = 'weights/model-3.pth'
     model.load_state_dict(torch.load(model_weight_path, map_location=device))
 
     for epoch in range(args.epochs):
@@ -64,12 +64,13 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=str, default=4)
+    parser.add_argument('--img_size', type=str, default=256)
     parser.add_argument('--epochs', type=int, default=1)
-    parser.add_argument('--batch-size', type=int, default=2)
+    parser.add_argument('--batch-size', type=int, default=4)
 
     # Root directory of the test dataset
     parser.add_argument('--data-path', type=str,
-                        default='/dataset/Testing')
+                        default='dataset/Testing')
     
     
     opt = parser.parse_args()
