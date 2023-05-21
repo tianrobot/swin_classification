@@ -1,10 +1,15 @@
 import os
 import argparse
+import cv2
 
 import torch
 import torch.optim as optim
+from albumentations import transforms
+from albumentations.core.composition import Compose, OneOf
+from albumentations.pytorch import ToTensorV2
+
 from torch.utils.tensorboard import SummaryWriter
-from torchvision import transforms
+# from torchvision import transforms
 
 from my_dataset import MyDataSet
 from model_v2 import swinv2_tiny_patch4_window8_256 as create_model
@@ -22,28 +27,33 @@ def main(args):
     train_images_path, train_images_label, val_images_path, val_images_label = read_split_data(args.data_path)
 
     img_size = args.img_size
-    data_transform = {
-        "train": transforms.Compose([transforms.RandomResizedCrop(img_size, interpolation=transforms.InterpolationMode.BILINEAR), # new 2
-                                     transforms.RandomHorizontalFlip(),
-                                     transforms.RandomRotation(90), # new 1
-                                     transforms.ToTensor(),
-                                     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]),
-        
-        "val": transforms.Compose([transforms.Resize(int(img_size * 1.14)),
-                                   transforms.CenterCrop(img_size),
-                                   # transforms.RandomRotation(90), # new 1
-                                   transforms.ToTensor(),
-                                   transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])}
+    data_transform ={
+        'train': Compose([transforms.RandomRotate90(),
+                          transforms.Flip(),
+                          OneOf([
+                              transforms.HueSaturationValue(),
+                              transforms.RandomBrightness(),
+                              transforms.RandomContrast(),
+                              ], p=1),
+                              transforms.Resize(img_size,img_size),
+                              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+                              ToTensorV2(),]),
+
+        'val': Compose([transforms.Resize(img_size, img_size),
+                        transforms.Normalize(),
+                        ToTensorV2(),])}
 
     # Training dataset
     train_dataset = MyDataSet(images_path=train_images_path,
                               images_class=train_images_label,
                               transform=data_transform["train"])
 
+
     # Validation dataset
     val_dataset = MyDataSet(images_path=val_images_path,
                             images_class=val_images_label,
                             transform=data_transform["val"])
+                            
 
     batch_size = args.batch_size
     nw = min([os.cpu_count(), batch_size if batch_size > 1 else 0, 8])  # number of workers
@@ -113,7 +123,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=4)
     parser.add_argument('--img_size', type=int, default=256)
-    parser.add_argument('--epochs', type=int, default=1)
+    parser.add_argument('--epochs', type=int, default=4)
     parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--lr', type=float, default=0.0001)
 
