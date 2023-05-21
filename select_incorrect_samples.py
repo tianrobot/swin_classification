@@ -122,10 +122,10 @@ if __name__ == '__main__':
 
     # The root directory where the dataset is located
     parser.add_argument('--data-path', type=str,
-                        default="../dataset/Testing")
+                        default="/dataset/Testing")
 
     # Training weight path
-    parser.add_argument('--weights', type=str, default='../weights/model-6.pth',
+    parser.add_argument('--weights', type=str, default='/weights/model-6.pth',
                         help='initial weights path')
     # Whether to freeze weights
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
