@@ -1,3 +1,6 @@
+import os
+import cv2
+
 from PIL import Image
 import torch
 from torch.utils.data import Dataset
@@ -15,17 +18,20 @@ class MyDataSet(Dataset):
         return len(self.images_path)
 
     def __getitem__(self, item):
-        img = Image.open(self.images_path[item])
+        img_path = self.images_path[item]
+        image = cv2.imread(img_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        channels = image.shape[2]
         # Convert MRIs into RGB image
-        img = img.convert('RGB')
-        if img.mode != 'RGB':
+        # img = img.convert('RGB')
+        if channels != 3:
             raise ValueError("RGB: {} isn't RGB mode.".format(self.images_path[item]))
         label = self.images_class[item]
 
         if self.transform is not None:
-            img = self.transform(img)
+            image = self.transform(image=image)['image']
 
-        return img, label
+        return image, label
 
     @staticmethod
     def collate_fn(batch):
