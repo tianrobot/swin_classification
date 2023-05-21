@@ -7,7 +7,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
 from my_dataset import MyDataSet
-from model import swin_base_patch4_window12_384_in22k as create_model
+from model_v2 import swinv2_tiny_patch4_window8_256 as create_model
 from utils import read_split_data, train_one_epoch, evaluate
 
 
@@ -21,14 +21,17 @@ def main(args):
 
     train_images_path, train_images_label, val_images_path, val_images_label = read_split_data(args.data_path)
 
-    img_size = 384
+    img_size = args.img_size
     data_transform = {
-        "train": transforms.Compose([transforms.RandomResizedCrop(img_size),
+        "train": transforms.Compose([transforms.RandomResizedCrop(img_size, interpolation=transforms.InterpolationMode.BILINEAR), # new 2
                                      transforms.RandomHorizontalFlip(),
+                                     transforms.RandomRotation(90), # new 1
                                      transforms.ToTensor(),
                                      transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]),
-        "val": transforms.Compose([transforms.Resize(int(img_size * 1.143)),
+        
+        "val": transforms.Compose([transforms.Resize(int(img_size * 1.14)),
                                    transforms.CenterCrop(img_size),
+                                   # transforms.RandomRotation(90), # new 1
                                    transforms.ToTensor(),
                                    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])}
 
@@ -59,7 +62,7 @@ def main(args):
                                              num_workers=nw,
                                              collate_fn=val_dataset.collate_fn)
 
-    model = create_model(num_classes=args.num_classes).to(device)
+    model = create_model(num_classes=args.num_classes, img_size=args.img_size).to(device)
 
     if args.weights != "":
         assert os.path.exists(args.weights), "weights file: '{}' not exist.".format(args.weights)
@@ -109,17 +112,18 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=4)
-    parser.add_argument('--epochs', type=int, default=7)
+    parser.add_argument('--img_size', type=int, default=256)
+    parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--lr', type=float, default=0.0001)
 
     # Root directory of the train dataset
     parser.add_argument('--data-path', type=str,
-                        default="../dataset/Training")
+                        default="dataset/Training")
 
     # Pretrain weight path, set to null character if you do not to load the Pretrain weight
     parser.add_argument('--weights', type=str, 
-                        default='../pretrained_model/swin_base_patch4_window12_384_22k.pth',
+                        default='pretrained_model/swinv2_tiny_patch4_window8_256.pth',
                         help='initial weights path')
     
     # Whether to freeze the weights
@@ -127,5 +131,5 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
 
     opt = parser.parse_args()
-
+ 
     main(opt)
