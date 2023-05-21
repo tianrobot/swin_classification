@@ -46,7 +46,7 @@ def main(args):
     # create model
     model = create_model(num_classes=args.num_classes).to(device)
     # load model weights
-    model_weight_path = '../weights/model-6.pth'
+    model_weight_path = '/weights/model-6.pth'
     model.load_state_dict(torch.load(model_weight_path, map_location=device))
 
     for epoch in range(args.epochs):
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
     # Root directory of the test dataset
     parser.add_argument('--data-path', type=str,
-                        default='../dataset/Testing')
+                        default='/dataset/Testing')
     
     
     opt = parser.parse_args()
