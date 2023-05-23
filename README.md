@@ -5,7 +5,7 @@ Under Development
 
 ## Introduction to code usage
 
-1. Download the dataset, the default used in the code is the MRI classification dataset，Download address:[https://github.com/sartajbhuvaji/brain-tumor-classification-dataset].
+1. Download the dataset, the default used in the code is the MRI classification dataset，Download address:[https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset].
 2. In `train.py` script to set `--data-path` to `mydataset` the absolute path of the folder.
 3. Download pre-training weights, in `model.py`script, each model has a download address for pre-training
 weights, you can download the corresponding pre-training weights according to the model you are using.
